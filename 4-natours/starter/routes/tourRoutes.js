@@ -1,10 +1,11 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
 const authController = require('./../controllers/authController');
+const reviewRouter = require('./../routes/reviewRouter');
 
 const router = express.Router();
-//Middlewares
-// router.param('id', tourController.checkID)
+
+router.use('/:tourId/reviews', reviewRouter)
 
 router.route('/tour-stats').get(tourController.getTourStats);
 
@@ -25,5 +26,9 @@ router
   .delete(authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour);
+
+
+
+
 
 module.exports = router;
